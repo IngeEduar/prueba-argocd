@@ -1,19 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: nginx-deployment
+  name: nginx-service
 spec:
-  replicas: 1
+  type: NodePort
   selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-        - name: nginx-container
-          image: nginx
-        - name: redis
-          image: redis
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 80
+    - protocol: TCP
+      port: 8001
+      targetPort: 8080
